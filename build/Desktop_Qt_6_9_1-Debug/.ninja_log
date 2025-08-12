@@ -1,0 +1,10 @@
+# ninja log v6
+2	7	1754958152716897925	CMakeFiles/clean.additional	7d54ee7770d40760
+7	12	1754958152722835210	clean	b1ee4797a165d111
+2	602	1754958153334890199	foo_autogen/timestamp	d4d4e327fdffc92a
+2	602	1754958153334890199	foo_autogen/mocs_compilation.cpp	d4d4e327fdffc92a
+2	602	1754958153334890199	/home/lol/Documents/Coding/C++/ChartRendering/build/Desktop_Qt_6_9_1-Debug/foo_autogen/timestamp	d4d4e327fdffc92a
+2	602	1754958153334890199	/home/lol/Documents/Coding/C++/ChartRendering/build/Desktop_Qt_6_9_1-Debug/foo_autogen/mocs_compilation.cpp	d4d4e327fdffc92a
+605	3898	1754958153347006901	CMakeFiles/foo.dir/Main.cpp.o	704ec20a48015553
+605	4703	1754958153345890061	CMakeFiles/foo.dir/foo_autogen/mocs_compilation.cpp.o	46b5de4943d592f3
+4703	5076	1754958157443838833	foo	b4011de99c5cbfcb
