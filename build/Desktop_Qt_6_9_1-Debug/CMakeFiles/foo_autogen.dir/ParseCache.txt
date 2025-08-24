@@ -717,6 +717,7 @@
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtGui/qvector2d.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtGui/qvectornd.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtGui/qwindowdefs.h
+ mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QButtonGroup
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QCheckBox
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QFileDialog
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QGraphicsLineItem
@@ -736,6 +737,7 @@
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qabstractscrollarea.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qabstractslider.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qboxlayout.h
+ mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qbuttongroup.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qcheckbox.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qdialog.h
  mdp:/home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qfiledialog.h

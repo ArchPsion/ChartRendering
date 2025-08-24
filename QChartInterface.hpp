@@ -2,6 +2,7 @@
 #define __Q_CHART_INTERFACE_HPP__
 
 // Qt Libraries
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QDoubleValidator>
 #include <QFileDialog>
@@ -29,36 +30,40 @@ class QChartInterface : public QMainWindow
 		
 		inline static QRectF			NonFlatRectangle(const QRectF&);
 		
-		QGraphicsView* const			candlestickView = new QGraphicsView(this);
-		QCustomGraphicsScene* const		candlestickScene = new QCustomGraphicsScene(this, sceneItemInfo);
-		QRectF					candlestickRect = QRectF();
+		QWidget* const				mainWidget = new QWidget();
 		
-		QLabel* const				fileLabel = new QLabel("No file loaded.", this);
+		QGraphicsView* const			candlestickView = new QGraphicsView(mainWidget);
+		QCustomGraphicsScene* const		candlestickScene = new QCustomGraphicsScene(mainWidget, sceneItemInfo);
 		
-		QLineEdit* const			cursorEdit = new QLineEdit(this);
-		QLineEdit* const			timestampEdit = new QLineEdit(this);
-		QLineEdit* const			highEdit = new QLineEdit(this);
-		QLineEdit* const			lowEdit = new QLineEdit(this);
+		QLabel* const				fileLabel = new QLabel("No file loaded.", mainWidget);
+		QLineEdit* const			cursorEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			timestampEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			highEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			lowEdit = new QLineEdit(mainWidget);
 		
-		QLineEdit* const			timeSpotEdit = new QLineEdit(this);
-		QLineEdit* const			timeUnitEdit = new QLineEdit(this);
-		QLineEdit* const			chartSizeEdit = new QLineEdit(this);
-		QLineEdit* const			takeProfitEdit = new QLineEdit(this);
-		QLineEdit* const			stopLossEdit = new QLineEdit(this);
+		QLineEdit* const			timeSpotEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			timeUnitEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			chartSizeEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			takeProfitEdit = new QLineEdit(mainWidget);
+		QLineEdit* const			stopLossEdit = new QLineEdit(mainWidget);
 		
-		QCheckBox* const			eIBox = new QCheckBox("Elemental Increment", this);
-		QCheckBox* const			level005Box = new QCheckBox("5", this);
-		QCheckBox* const			level010Box = new QCheckBox("10", this);
-		QCheckBox* const			level025Box = new QCheckBox("25", this);
-		QCheckBox* const			level050Box = new QCheckBox("50", this);
-		QCheckBox* const			level100Box = new QCheckBox("100", this);
-		QCheckBox* const			level250Box = new QCheckBox("250", this);
-		QCheckBox* const			level500Box = new QCheckBox("500", this);
+		QCheckBox* const			eIBox = new QCheckBox("Elemental Increment", mainWidget);
+		QButtonGroup* const			buttonGroup = new QButtonGroup(mainWidget);
 		
-		QTextBrowser* const			informationPanel = new QTextBrowser(this);
+		QCheckBox* const			level005Box = new QCheckBox("5", mainWidget);
+		QCheckBox* const			level010Box = new QCheckBox("10", mainWidget);
+		QCheckBox* const			level025Box = new QCheckBox("25", mainWidget);
+		QCheckBox* const			level050Box = new QCheckBox("50", mainWidget);
+		QCheckBox* const			level100Box = new QCheckBox("100", mainWidget);
+		QCheckBox* const			level250Box = new QCheckBox("250", mainWidget);
+		QCheckBox* const			level500Box = new QCheckBox("500", mainWidget);
+		
+		QTextBrowser* const			informationPanel = new QTextBrowser(mainWidget);
 		const QString				logHeader = "<html><head><style>p.small { line-height: 0.4; }</style></head><body>";
 		const QString				logFooter = "</body></html>";
+		
 		QString					logBody;
+		QRectF					candlestickRect;
 		
 		HexDayAnalysis				savedInformation;
 		std::vector<HexStrip>			sceneItemInfo;
@@ -92,10 +97,9 @@ class QChartInterface : public QMainWindow
 QChartInterface::QChartInterface(void) : QMainWindow()
 {
 	QMainWindow::setWindowTitle("Custom Chart Study");
+	QMainWindow::setCentralWidget(QChartInterface::mainWidget);
+	
 	QChartInterface::candlestickScene->setEdits(QChartInterface::highEdit, QChartInterface::lowEdit, QChartInterface::timestampEdit, QChartInterface::cursorEdit);
-
-	const auto layout = new QGridLayout(new QWidget());
-	QMainWindow::setCentralWidget(layout->parentWidget());
 
 	const auto loadButton = new QPushButton("Load", this);
 	const auto resetButton = new QPushButton("Reset", this);
@@ -103,19 +107,16 @@ QChartInterface::QChartInterface(void) : QMainWindow()
 	const auto studyButton = new QPushButton("Study", this);
 	
 	const auto cList = { loadButton, resetButton, showButton, studyButton };
+	const auto layout = new QGridLayout();
 	auto count = 0;
+	
+	layout->addWidget(QChartInterface::fileLabel, 0, count, 1, 8);
+	count += 8;
 	
 	for (const auto& button : cList)
 		layout->addWidget(button, 0, count++, 1, 1);
 	
-	QObject::connect(loadButton, SIGNAL(clicked(void)), this, SLOT(loadHistory(void)));
-	QObject::connect(resetButton, SIGNAL(clicked(void)), this, SLOT(reset(void)));
-	QObject::connect(showButton, SIGNAL(clicked(void)), this, SLOT(showCandlesticks(void)));
-	QObject::connect(studyButton, SIGNAL(clicked(void)), this, SLOT(study(void)));
-	
 	QChartInterface::fileLabel->setMinimumWidth(200);
-	layout->addWidget(QChartInterface::fileLabel, 0, count, 1, 8);
-	count += 8;
 	
 	const auto cursorLabel = new QLabel("Cursor", this);
 	cursorLabel->setMaximumWidth(50);
@@ -185,24 +186,21 @@ QChartInterface::QChartInterface(void) : QMainWindow()
 	QChartInterface::level010Box->setChecked(true);
 	
 	const auto bList = { QChartInterface::level005Box, QChartInterface::level010Box, QChartInterface::level025Box, QChartInterface::level050Box,
-				QChartInterface::level100Box, QChartInterface::level250Box, QChartInterface::level500Box, QChartInterface::eIBox };
+				QChartInterface::level100Box, QChartInterface::level250Box, QChartInterface::level500Box };
 	
 	for (const auto& box : bList)
+	{
 		layout->addWidget(box, 0, count++, 1, 1);
+		QChartInterface::buttonGroup->addButton(box);
+	}
 	
-	QObject::connect(QChartInterface::level005Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
-	QObject::connect(QChartInterface::level010Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
-	QObject::connect(QChartInterface::level025Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
-	QObject::connect(QChartInterface::level050Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
-	QObject::connect(QChartInterface::level100Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
-	QObject::connect(QChartInterface::level250Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
-	QObject::connect(QChartInterface::level500Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	layout->addWidget(QChartInterface::eIBox, 0, count++, 1, 1);
 	
-	QChartInterface::informationPanel->setMinimumWidth(450);
+	QChartInterface::informationPanel->setMinimumWidth(300);
 	QChartInterface::informationPanel->setReadOnly(true);
 	QChartInterface::informationPanel->setOpenLinks(false);
 	
-	QChartInterface::candlestickView->setMinimumWidth(3'200);
+	QChartInterface::candlestickView->setMinimumWidth(1'800);
 	QChartInterface::candlestickView->setMinimumHeight(800);
 	QChartInterface::candlestickView->setScene(QChartInterface::candlestickScene);
 	QChartInterface::candlestickView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -212,8 +210,21 @@ QChartInterface::QChartInterface(void) : QMainWindow()
 	
 	layout->addWidget(QChartInterface::informationPanel, 1, 0, 5, 4);
 	layout->addWidget(QChartInterface::candlestickView, 1, 4, 5, count - 4);
+	QChartInterface::mainWidget->setLayout(layout);
 
+	QObject::connect(loadButton, SIGNAL(clicked(void)), this, SLOT(loadHistory(void)));
+	QObject::connect(resetButton, SIGNAL(clicked(void)), this, SLOT(reset(void)));
+	QObject::connect(showButton, SIGNAL(clicked(void)), this, SLOT(showCandlesticks(void)));
+	QObject::connect(studyButton, SIGNAL(clicked(void)), this, SLOT(study(void)));
+	QObject::connect(QChartInterface::level005Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	QObject::connect(QChartInterface::level010Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	QObject::connect(QChartInterface::level025Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	QObject::connect(QChartInterface::level050Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	QObject::connect(QChartInterface::level100Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	QObject::connect(QChartInterface::level250Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
+	QObject::connect(QChartInterface::level500Box, SIGNAL(toggled(bool)), this, SLOT(updateBlackLines(void)));
 	QObject::connect(QChartInterface::informationPanel, SIGNAL(anchorClicked(const QUrl&)), this, SLOT(showNewCandlesticks(const QUrl&)));
+	
 	QChartInterface::reset();
 }
 

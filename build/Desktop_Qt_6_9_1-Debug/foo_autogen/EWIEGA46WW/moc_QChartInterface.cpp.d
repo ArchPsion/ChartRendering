@@ -204,6 +204,7 @@
   /home/lol/Qt/6.9.1/gcc_64/include/QtGui/qvector2d.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtGui/qvectornd.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtGui/qwindowdefs.h \
+  /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QButtonGroup \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QCheckBox \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QFileDialog \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/QGraphicsLineItem \
@@ -223,6 +224,7 @@
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qabstractslider.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qboxlayout.h \
+  /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qbuttongroup.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qcheckbox.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qdialog.h \
   /home/lol/Qt/6.9.1/gcc_64/include/QtWidgets/qfiledialog.h \
